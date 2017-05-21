@@ -73,6 +73,8 @@ random_excursion_variant_test            0.121267812518     PASS
 Next we create some serially correlated data and run it through the tests.
 
 ```
+$ djenrandom -b -k 128 -m correlated --correlation=-0.2 > correlated_megrandom.bin
+$ ./sp800_22_tests.py correlated_megabitrand.bin
 Tests of Distinguishability from Random
 TEST: monobit_test
   Ones count   = 524242
