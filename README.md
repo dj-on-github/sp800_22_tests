@@ -37,3 +37,66 @@ cumulative_sums_test                     0.18603533058    PASS
 random_excursion_test                    0.151908516968   PASS
 random_excursion_variant_test            0.019160041631   PASS
 ```
+
+Next we create a biased data file, where the probability of a 1 is 40% and a 0 is 60% and run it through the test.
+
+```
+$ djenrandom -b -k 128 -m biased --bias=0.4 > biased_megabitrand.bin
+$ ./sp800_22_tests.py biased_megabitrand.bin
+Tests of Distinguishability from Random
+TEST: monobit_test
+  Ones count   = 420122
+  Zeroes count = 628454
+  FAIL
+
+[ Lots of per test output ]
+
+SUMMARY
+-------
+monobit_test                             0.0                FAIL
+frequency_within_block_test              0.0                FAIL
+runs_test                                0.0                FAIL
+longest_run_ones_in_a_block_test         1.81518103863e-81  FAIL
+binary_matrix_rank_test                  0.22156738316      PASS
+dft_test                                 3.56787241447e-17  FAIL
+non_overlapping_template_matching_test   0.759928185368     PASS
+overlapping_template_matching_test       5.31335556946e-91  FAIL
+maurers_universal_test                   0.910613044038     PASS
+linear_complexity_test                   0.317575269575     PASS
+serial_test                              0.0                FAIL
+approximate_entropy_test                 0.0                FAIL
+cumulative_sums_test                     0.0                FAIL
+random_excursion_test                    9.15178471457e-06  FAIL
+random_excursion_variant_test            0.121267812518     PASS
+```
+
+Next we create some serially correlated data and run it through the tests.
+
+```
+Tests of Distinguishability from Random
+TEST: monobit_test
+  Ones count   = 524242
+  Zeroes count = 524334
+  PASS
+  P=0.928411381275
+
+[ Lots of per test output ]
+
+SUMMARY
+-------
+monobit_test                             0.928411381275     PASS
+frequency_within_block_test              0.99598493834      PASS
+runs_test                                0.0                FAIL
+longest_run_ones_in_a_block_test         3.45886379519e-81  FAIL
+binary_matrix_rank_test                  0.379259346315     PASS
+dft_test                                 8.67506291511e-16  FAIL
+non_overlapping_template_matching_test   0.999999863695     PASS
+overlapping_template_matching_test       1.1953875512e-90   FAIL
+maurers_universal_test                   0.923207164612     PASS
+linear_complexity_test                   0.47696777353      PASS
+serial_test                              0.0                FAIL
+approximate_entropy_test                 0.0                FAIL
+cumulative_sums_test                     0.853890590584     PASS
+random_excursion_test                    7.63411305092e-09  FAIL
+random_excursion_variant_test            0.0662033926665    PASS
+```
