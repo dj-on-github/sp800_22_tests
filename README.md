@@ -5,7 +5,7 @@ The NIST STS-2.1.2 implementation of the SP800-22 Rev1a tests has some problems.
 
 This implementation provides a separate python file, one for each test and a program to read a binary data file and send it to each of the tests. The summary results are output at the end.
 
-In the example below a 1 Mibibit uniform random binary file is generated with djenrandom and run through the test.
+In the example below a 1 Mibibit uniform random binary file is generated with djenrandom (https://github.com/dj-on-github/djenrandom) and run through the test.
 
 ```
 $ djenrandom -b -k 128 > megabitrand.bin
@@ -102,3 +102,37 @@ cumulative_sums_test                     0.853890590584     PASS
 random_excursion_test                    7.63411305092e-09  FAIL
 random_excursion_variant_test            0.0662033926665    PASS
 ```
+
+Next we create some data with both bias and serial correlation from an Ornstein–Uhlenbeck process and run it through the tool
+
+```
+$ djenrandom -b -k 128 -m sums -l 0.2 -r 0.3 > sums_megrandom.bin
+$ ./sp800_22_tests.py sums_megrandom.bin
+Tests of Distinguishability from Random
+TEST: monobit_test
+  Ones count   = 419429
+  Zeroes count = 629147
+  FAIL
+  P=0.0
+
+[ Lots of per test output ]
+
+SUMMARY
+-------
+monobit_test                             0.0                FAIL
+frequency_within_block_test              0.0                FAIL
+runs_test                                0.0                FAIL
+longest_run_ones_in_a_block_test         2.32811341972e-159 FAIL
+binary_matrix_rank_test                  0.702984863193     PASS
+dft_test                                 7.91957168353e-06  FAIL
+non_overlapping_template_matching_test   0.949847572332     PASS
+overlapping_template_matching_test       1.16046343793e-137 FAIL
+maurers_universal_test                   0.90191137295      PASS
+linear_complexity_test                   0.16038668337      PASS
+serial_test                              0.0                FAIL
+approximate_entropy_test                 0.0                FAIL
+cumulative_sums_test                     0.0                FAIL
+random_excursion_test                    2.20517667303e-09  FAIL
+random_excursion_variant_test            0.0                FAIL
+```
+
