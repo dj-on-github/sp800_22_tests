@@ -7,6 +7,7 @@ This implementation provides a separate python file, one for each test and a pro
 
 In the example below a 1 Mibibit uniform random binary file is generated with djenrandom and run through the test.
 
+```
 $ djenrandom -b -k 128 > megabitrand.bin
 $ ./sp800_22_tests.py megabitrand.bin
 Tests of Distinguishability from Random
@@ -35,3 +36,4 @@ approximate_entropy_test                 0.895690030562   PASS
 cumulative_sums_test                     0.18603533058    PASS
 random_excursion_test                    0.151908516968   PASS
 random_excursion_variant_test            0.019160041631   PASS
+```
