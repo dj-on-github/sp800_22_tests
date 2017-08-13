@@ -23,7 +23,8 @@
 
 import math
 from fractions import Fraction
-from scipy.special import gamma, gammainc, gammaincc
+#from scipy.special import gamma, gammainc, gammaincc
+from gamma_functions import *
 import numpy
 import cmath
 import random

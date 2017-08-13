@@ -22,7 +22,8 @@
 
 
 import math
-from scipy.special import gamma, gammainc, gammaincc
+#from scipy.special import gamma, gammainc, gammaincc
+from gamma_functions import *
 
 # RANDOM EXCURSION TEST
 def random_excursion_test(bits):
