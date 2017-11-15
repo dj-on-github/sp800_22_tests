@@ -22,7 +22,8 @@
 
 
 import math
-from scipy.special import gamma, gammainc, gammaincc
+#from scipy.special import gamma, gammainc, gammaincc
+from gamma_functions import *
 
 def int2patt(n,m):
     pattern = list()

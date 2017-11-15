@@ -22,8 +22,12 @@
 
 
 import math
-from scipy.special import gamma, gammainc, gammaincc
-import scipy.stats
+#from scipy.special import gamma, gammainc, gammaincc
+from gamma_functions import *
+#import scipy.stats
+
+def normcdf(n):
+    return 0.5 * math.erfc(-n * math.sqrt(0.5))
 
 def p_value(n,z):
     sum_a = 0.0
@@ -31,9 +35,11 @@ def p_value(n,z):
     endk   = int(math.floor((((float(n)/z)-1.0)/4.0)))
     for k in xrange(startk,endk+1):
         c = (((4.0*k)+1.0)*z)/math.sqrt(n)
-        d = scipy.stats.norm.cdf(c)
+        #d = scipy.stats.norm.cdf(c)
+        d = normcdf(c)
         c = (((4.0*k)-1.0)*z)/math.sqrt(n)
-        e = scipy.stats.norm.cdf(c)
+        #e = scipy.stats.norm.cdf(c)
+        e = normcdf(c)
         sum_a = sum_a + d - e
 
     sum_b = 0.0
@@ -41,9 +47,11 @@ def p_value(n,z):
     endk   = int(math.floor((((float(n)/z)-1.0)/4.0)))
     for k in xrange(startk,endk+1):
         c = (((4.0*k)+3.0)*z)/math.sqrt(n)
-        d = scipy.stats.norm.cdf(c)
+        #d = scipy.stats.norm.cdf(c)
+        d = normcdf(c)
         c = (((4.0*k)+1.0)*z)/math.sqrt(n)
-        e = scipy.stats.norm.cdf(c)
+        #e = scipy.stats.norm.cdf(c)
+        e = normcdf(c)
         sum_b = sum_b + d - e 
 
     p = 1.0 - sum_a + sum_b

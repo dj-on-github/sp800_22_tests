@@ -22,7 +22,9 @@
 
 
 import math
-from scipy.special import gamma, gammainc, gammaincc
+#from scipy.special import gamma, gammainc, gammaincc
+from gamma_functions import *
+
 import random
 
 def probs(K,M,i):
