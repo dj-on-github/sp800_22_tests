@@ -79,7 +79,7 @@ def binary_matrix_rank_test(bits,M=32,Q=32):
     chisq += (((FMM-(FRM1_prob*N))**2)/(FRM1_prob*N))
     chisq += (((remainder-(LR_prob*N))**2)/(LR_prob*N))
     p = math.e **(-chisq/2.0)
-    success = (p >= 0.1)
+    success = (p >= 0.01)
     
     print "  Full Rank Count  = ",FM
     print "  Full Rank -1 Count = ",FMM
