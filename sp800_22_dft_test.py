@@ -45,7 +45,7 @@ def dft_test(bits):
         if mag < T:
             N1 += 1.0
     print "  N1 = %f" % N1
-    d = (N1 - N0)/math.sqrt((n*0.95*0.5)/4) # Compute the P value
+    d = (N1 - N0)/math.sqrt((n*0.95*0.05)/4) # Compute the P value
     p = math.erfc(abs(d)/math.sqrt(2))
 
     success = (p >= 0.01)
