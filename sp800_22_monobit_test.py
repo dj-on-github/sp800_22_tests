@@ -43,7 +43,7 @@ def monobit_test(bits):
     
     p = math.erfc(float(s)/(math.sqrt(float(n)) * math.sqrt(2.0)))
     
-    success = (p >= 0.1)
+    success = (p >= 0.01)
     return (success,p,None)
     
 

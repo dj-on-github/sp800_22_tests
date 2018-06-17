@@ -43,6 +43,7 @@ def read_bits_from_file(filename,bigendian):
                     bitlist.append(bit)    
         else:
             break
+    f.close()
     return bitlist
 
 import argparse

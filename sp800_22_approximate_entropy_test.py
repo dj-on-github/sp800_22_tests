@@ -70,7 +70,8 @@ def approximate_entropy_test(bits):
         # Step 4
         sum = 0.0
         for i in xrange(2**iterm):
-            sum += Ci[i]*math.log((Ci[i]/10.0))
+            if (C[i] > 0.0):
+                sum += Ci[i]*math.log((Ci[i]/10.0))
         phi_m.append(sum)
         print "  phi(%d)    = %f" % (m,sum)
         
