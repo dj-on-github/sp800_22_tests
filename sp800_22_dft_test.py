@@ -1,5 +1,3 @@
-import math
-import numpy
 
 # sp800_22_dft_test.py
 #
@@ -21,6 +19,11 @@ import numpy
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
+import math
+import numpy
+import sys
 
 def dft_test(bits):
     n = len(bits)
@@ -34,17 +37,20 @@ def dft_test(bits):
     ts_np = numpy.array(ts)
     fs = numpy.fft.fft(ts_np)  # Compute DFT
    
-    mags = abs(fs)[:n/2] # Compute magnitudes of first half of sequence
-
+    if sys.version_info > (3,0):
+        mags = abs(fs)[:n//2] # Compute magnitudes of first half of sequence
+    else:
+        mags = abs(fs)[:n/2] # Compute magnitudes of first half of sequence
+    
     T = math.sqrt(math.log(1.0/0.05)*n) # Compute upper threshold
     N0 = 0.95*n/2.0
-    print "  N0 = %f" % N0
+    print("  N0 = %f" % N0)
 
     N1 = 0.0   # Count the peaks above the upper theshold
     for mag in mags:
         if mag < T:
             N1 += 1.0
-    print "  N1 = %f" % N1
+    print("  N1 = %f" % N1)
     d = (N1 - N0)/math.sqrt((n*0.95*0.05)/4) # Compute the P value
     p = math.erfc(abs(d)/math.sqrt(2))
 

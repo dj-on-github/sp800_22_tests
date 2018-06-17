@@ -20,6 +20,8 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import math
 from fractions import Fraction
 #from scipy.special import gamma, gammainc, gammaincc
@@ -48,19 +50,19 @@ def frequency_within_block_test(bits):
         M = int(math.floor(n/N))
     
     if len(bits) < 100:
-        print "Too little data for test. Supply at least 100 bits"
+        print("Too little data for test. Supply at least 100 bits")
         return FAIL,1.0,None
     
-    print "  n = %d" % len(bits)
-    print "  N = %d" % N
-    print "  M = %d" % M
+    print("  n = %d" % len(bits))
+    print("  N = %d" % N)
+    print("  M = %d" % M)
     
     num_of_blocks = N
     block_size = M #int(math.floor(len(bits)/num_of_blocks))
     #n = int(block_size * num_of_blocks)
     
     proportions = list()
-    for i in xrange(num_of_blocks):
+    for i in range(num_of_blocks):
         block = bits[i*(block_size):((i+1)*(block_size))]
         zeroes,ones = count_ones_zeroes(block)
         proportions.append(Fraction(ones,block_size))

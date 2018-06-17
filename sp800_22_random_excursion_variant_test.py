@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 
@@ -44,9 +45,9 @@ def random_excursion_variant_test(bits):
     for value in sprime[1:]:
         if value == 0:
             J += 1
-    print "J=",J
+    print("J=",J)
     # Build the counts of offsets
-    count = [0 for x in xrange(-9,10)]
+    count = [0 for x in range(-9,10)]
     for value in sprime:
         if (abs(value) < 10):
             count[value] += 1
@@ -54,7 +55,7 @@ def random_excursion_variant_test(bits):
     # Compute P values
     success = True
     plist = list()
-    for x in xrange(-9,10):
+    for x in range(-9,10):
         if x != 0:
             top = abs(count[x]-J)
             bottom = math.sqrt(2.0 * J *((4.0*abs(x))-2.0))
@@ -65,13 +66,13 @@ def random_excursion_variant_test(bits):
                 success = False
             else:
                 err = ""
-            print "x = %1.0f\t count=%d\tp = %f %s"  % (x,count[x],p,err)
+            print("x = %1.0f\t count=%d\tp = %f %s"  % (x,count[x],p,err))
             
     if (J < 500):
-        print "J too small (J=%d < 500) for result to be reliable" % J
+        print("J too small (J=%d < 500) for result to be reliable" % J)
     elif success:
-        print "PASS"
+        print("PASS")
     else:    
-        print "FAIL: Data not random"
+        print("FAIL: Data not random")
     return (success,None,plist)
 

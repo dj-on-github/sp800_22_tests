@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
  
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -38,11 +39,11 @@ def berelekamp_massey(bits):
     while (N < n):
         #compute discrepancy
         d = bits[N]
-        for i in xrange(1,L+1):
+        for i in range(1,L+1):
             d = d ^ (c[i] & bits[N-i])
         if (d != 0):  # If d is not zero, adjust poly
             t = c[:]
-            for i in xrange(0,n-N+m):
+            for i in range(0,n-N+m):
                 c[N-m+i] = c[N-m+i] ^ b[i] 
             if (L <= (N/2)):
                 L = N + 1 - L
@@ -59,18 +60,18 @@ def linear_complexity_test(bits,patternlen=None):
         M = patternlen  
     else: 
         if n < 1000000:
-            print "Error. Need at least 10^6 bits"
+            print("Error. Need at least 10^6 bits")
             exit()
         M = 512
     K = 6 
     N = int(math.floor(n/M))
-    print "  M = ", M
-    print "  N = ", N
-    print "  K = ", K    
+    print("  M = ", M)
+    print("  N = ", N)
+    print("  K = ", K)    
     
     # Step 2 Compute the linear complexity of the blocks
     LC = list()
-    for i in xrange(N):
+    for i in range(N):
         x = bits[(i*M):((i+1)*M)]
         LC.append(berelekamp_massey(x)[0])
     
@@ -81,7 +82,7 @@ def linear_complexity_test(bits,patternlen=None):
     mu =  a+b-c
     
     T = list()
-    for i in xrange(N):
+    for i in range(N):
         x = ((-1.0)**M) * (LC[i] - mu) + (2.0/9.0)
         T.append(x)
         
@@ -106,12 +107,12 @@ def linear_complexity_test(bits,patternlen=None):
     # Step 5 Compute Chi Square Statistic
     pi = [0.010417,0.03125,0.125,0.5,0.25,0.0625,0.020833]
     chisq = 0.0
-    for i in xrange(K+1):
+    for i in range(K+1):
         chisq += ((v[i] - (N*pi[i]))**2.0)/(N*pi[i])
-    print "  chisq = ",chisq
+    print("  chisq = ",chisq)
     # Step 6 Compute P Value
     P = gammaincc((K/2.0),(chisq/2.0))
-    print "  P = ",P
+    print("  P = ",P)
     success = (P >= 0.01)
     return (success, P, None)
     
@@ -124,6 +125,6 @@ if __name__ == "__main__":
             0,0,0,1,1,1,0,1,0,1,1,1,1,0,0,0,1]
     success,p,_ = linear_complexity_test(bits,patternlen=7)
     
-    print "L =",L
-    print "p = ",p
+    print("L =",L)
+    print("p = ",p)
        

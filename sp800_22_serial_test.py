@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -27,15 +28,15 @@ from gamma_functions import *
 
 def int2patt(n,m):
     pattern = list()
-    for i in xrange(m):
+    for i in range(m):
         pattern.append((n >> i) & 1)
     return pattern
     
 def countpattern(patt,bits,n):
     thecount = 0
-    for i in xrange(n):
+    for i in range(n):
         match = True
-        for j in xrange(len(patt)):
+        for j in range(len(patt)):
             if patt[j] != bits[i+j]:
                 match = False
         if match:
@@ -43,8 +44,8 @@ def countpattern(patt,bits,n):
     return thecount
 
 def psi_sq_mv1(m, n, padded_bits):
-    counts = [0 for i in xrange(2**m)] 
-    for i in xrange(2**m):
+    counts = [0 for i in range(2**m)] 
+    for i in range(2**m):
         pattern = int2patt(i,m)
         count = countpattern(pattern,padded_bits,n)
         counts.append(count)
@@ -64,7 +65,7 @@ def serial_test(bits,patternlen=None):
         m = int(math.floor(math.log(n,2)))-2
     
         if m < 4:
-            print "Error. Not enough data for m to be 4"
+            print("Error. Not enough data for m to be 4")
             return False,0,None
         m = 4
     
@@ -82,13 +83,13 @@ def serial_test(bits,patternlen=None):
     P1 = gammaincc(2**(m-2),delta1/2.0)
     P2 = gammaincc(2**(m-3),delta2/2.0)
         
-    print "  psi_sq_m   = ",psi_sq_m
-    print "  psi_sq_mm1 = ",psi_sq_mm1
-    print "  psi_sq_mm2 = ",psi_sq_mm2
-    print "  delta1     = ",delta1
-    print "  delta2     = ",delta2  
-    print "  P1         = ",P1
-    print "  P2         = ",P2
+    print("  psi_sq_m   = ",psi_sq_m)
+    print("  psi_sq_mm1 = ",psi_sq_mm1)
+    print("  psi_sq_mm2 = ",psi_sq_mm2)
+    print("  delta1     = ",delta1)
+    print("  delta2     = ",delta2)  
+    print("  P1         = ",P1)
+    print("  P2         = ",P2)
      
     success = (P1 >= 0.01) and (P2 >= 0.01)
     return (success, None, [P1,P2])
@@ -97,6 +98,6 @@ if __name__ == "__main__":
     bits = [0,0,1,1,0,1,1,1,0,1]
     success, _, plist = serial_test(bits, patternlen=3)
     
-    print "success =",success
-    print "plist = ",plist
+    print("success =",success)
+    print("plist = ",plist)
     

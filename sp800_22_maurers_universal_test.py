@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 
@@ -42,7 +43,7 @@ def maurers_universal_test(bits,patternlen=None, initblocks=None):
               231669760,496435200,1059061760]
         L = 6
         if n < 387840:
-            print "Error. Need at least 387840 bits. Got %d." % n
+            print("Error. Need at least 387840 bits. Got %d." % n)
             exit()
         for threshold in ns:
             if n >= threshold:
@@ -58,25 +59,25 @@ def maurers_universal_test(bits,patternlen=None, initblocks=None):
     
     # Step 3 Construct Table
     nsymbols = (2**L)
-    T=[0 for x in xrange(nsymbols)] # zero out the table
-    for i in xrange(Q):             # Mark final position of
+    T=[0 for x in range(nsymbols)] # zero out the table
+    for i in range(Q):             # Mark final position of
         pattern = bits[i*L:(i+1)*L] # each pattern
         idx = pattern2int(pattern)
         T[idx]=i+1      # +1 to number indexes 1..(2**L)+1
                         # instead of 0..2**L
     # Step 4 Iterate
     sum = 0.0
-    for i in xrange(Q,nblocks):
+    for i in range(Q,nblocks):
         pattern = bits[i*L:(i+1)*L]
         j = pattern2int(pattern)
         dist = i+1-T[j]
         T[j] = i+1
         sum = sum + math.log(dist,2)
-    print "  sum =", sum
+    print("  sum =", sum)
     
     # Step 5 Compute the test statistic
     fn = sum/K
-    print "  fn =",fn
+    print("  fn =",fn)
        
     # Step 6 Compute the P Value
     # Tables from https://static.aminer.org/pdf/PDF/000/120/333/
@@ -101,6 +102,6 @@ if __name__ == "__main__":
     bits = [0,1,0,1,1,0,1,0,0,1,1,1,0,1,0,1,0,1,1,1]
     success, p, _ = maurers_universal_test(bits, patternlen=2, initblocks=4)
     
-    print "success =",success
-    print "p       = ",p
+    print("success =",success)
+    print("p       = ",p)
     

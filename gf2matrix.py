@@ -19,6 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import copy
 
 MATRIX_FORWARD_ELIMINATION = 0
@@ -29,7 +31,7 @@ def print_matrix(matrix):
     #print "len matrix = ",str(len(matrix))
     #for line in matrix:
     #    print line
-    for i in xrange(len(matrix)):
+    for i in range(len(matrix)):
         #print "Line %d" % i
         line = matrix[i]
         #print "Line %d = %s" % (i,str(line))
@@ -43,7 +45,7 @@ def print_matrix(matrix):
             astr += "]"
         else:
             astr = astr + "\n"
-    print astr
+    print(astr)
     #print "END PRINT MATRIX"
 
     
@@ -52,10 +54,10 @@ def row_echelon(M,Q,matrix,blknum):
     
     pivotstartrow = 0
     pivotstartcol = 0
-    for i in xrange(Q):
+    for i in range(Q):
         # find pivotrow
         found = False
-        for k in xrange(pivotstartrow,Q):
+        for k in range(pivotstartrow,Q):
             if lm[k][pivotstartcol] == 1:
                 found = True
                 pivotrow = k
@@ -67,7 +69,7 @@ def row_echelon(M,Q,matrix,blknum):
                 lm[pivotrow],lm[pivotstartrow] = lm[pivotstartrow],lm[pivotrow]
                     
             # eliminate lower triangle column
-            for j in xrange(pivotstartrow+1,Q):
+            for j in range(pivotstartrow+1,Q):
                 if lm[j][pivotstartcol]==1:
                     lm[j] = [x ^ y for x,y in zip(lm[pivotstartrow],lm[j])]  
                 
@@ -81,7 +83,7 @@ def row_echelon(M,Q,matrix,blknum):
 def rank(M,Q,matrix,blknum):
     lm = row_echelon(M,Q,matrix,blknum)
     rank = 0
-    for i in xrange(Q):
+    for i in range(Q):
         nonzero = False
         for bit in lm[i]:
             if bit == 1:
@@ -95,7 +97,7 @@ def computeRank(M, Q, matrix):
     
     localmatrix = copy.deepcopy(matrix)
     # FORWARD APPLICATION OF ELEMENTARY ROW OPERATIONS  
-    for i in xrange(m-1):
+    for i in range(m-1):
         if ( localmatrix[i][i] == 1 ): 
             localmatrix = perform_elementary_row_operations(MATRIX_FORWARD_ELIMINATION, i, M, Q, localmatrix)
         else: # localmatrix[i][i] = 0 
@@ -106,7 +108,7 @@ def computeRank(M, Q, matrix):
 
 
     # BACKWARD APPLICATION OF ELEMENTARY ROW OPERATIONS  
-    for i in xrange(m-1,0,-1):
+    for i in range(m-1,0,-1):
     #for ( i=m-1; i>0; i-- ) {
         if ( localmatrix[i][i] == 1 ):
             localmatrix = perform_elementary_row_operations(MATRIX_BACKWARD_ELIMINATION, i, M, Q, localmatrix)
@@ -128,17 +130,17 @@ def perform_elementary_row_operations(flag, i, M, Q, A):
     k = 0
     
     if ( flag == MATRIX_FORWARD_ELIMINATION ):
-        for j in xrange(i+1,M):
+        for j in range(i+1,M):
         #for ( j=i+1; j<M;  j++ )
             if ( A[j][i] == 1 ):
-                for k in xrange(i,Q):
+                for k in range(i,Q):
                 #for ( k=i; k<Q; k++ ) 
                     A[j][k] = (A[j][k] + A[i][k]) % 2
     else: 
         #for ( j=i-1; j>=0;  j-- )
-        for j in xrange(i-1,-1,-1):
+        for j in range(i-1,-1,-1):
             if ( A[j][i] == 1 ):
-                for k in xrange(Q):
+                for k in range(Q):
                 #for ( k=0; k<Q; k++ )
                     A[j][k] = (A[j][k] + A[i][k]) % 2
 
@@ -181,10 +183,10 @@ def determine_rank(m, M, Q, A):
     # DETERMINE RANK, THAT IS, COUNT THE NUMBER OF NONZERO ROWS
     
     rank = m
-    for i in xrange(M):
+    for i in range(M):
     #for ( i=0; i<M; i++ ) {
         allZeroes = 1 
-        for j in xrange(Q):
+        for j in range(Q):
         #for ( j=0; j<Q; j++)  {
             if ( A[i][j] == 1 ):
                 allZeroes = 0
@@ -195,15 +197,15 @@ def determine_rank(m, M, Q, A):
 
 def create_matrix(M, Q):
     matrix = list()
-    for rownum in xrange(Q):
-        row = [0 for x in xrange(M)]
+    for rownum in range(Q):
+        row = [0 for x in range(M)]
         matrix.append(row)
         
     return matrix
 
 def matrix_from_bits(M,Q,bits,blknum):
     m = list()
-    for rownum in xrange(Q):
+    for rownum in range(Q):
         row = bits[rownum*M:(rownum+1)*M]
         m.append(row)
     return m[:]

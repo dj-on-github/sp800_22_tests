@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 
@@ -38,8 +39,8 @@ def monobit_test(bits):
     
     zeroes,ones = count_ones_zeroes(bits)
     s = abs(ones-zeroes)
-    print "  Ones count   = %d" % ones
-    print "  Zeroes count = %d" % zeroes
+    print("  Ones count   = %d" % ones)
+    print("  Zeroes count = %d" % zeroes)
     
     p = math.erfc(float(s)/(math.sqrt(float(n)) * math.sqrt(2.0)))
     

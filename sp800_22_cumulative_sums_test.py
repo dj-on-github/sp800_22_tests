@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -33,7 +34,7 @@ def p_value(n,z):
     sum_a = 0.0
     startk = int(math.floor((((float(-n)/z)+1.0)/4.0)))
     endk   = int(math.floor((((float(n)/z)-1.0)/4.0)))
-    for k in xrange(startk,endk+1):
+    for k in range(startk,endk+1):
         c = (((4.0*k)+1.0)*z)/math.sqrt(n)
         #d = scipy.stats.norm.cdf(c)
         d = normcdf(c)
@@ -45,7 +46,7 @@ def p_value(n,z):
     sum_b = 0.0
     startk = int(math.floor((((float(-n)/z)-3.0)/4.0)))
     endk   = int(math.floor((((float(n)/z)-1.0)/4.0)))
-    for k in xrange(startk,endk+1):
+    for k in range(startk,endk+1):
         c = (((4.0*k)+3.0)*z)/math.sqrt(n)
         #d = scipy.stats.norm.cdf(c)
         d = normcdf(c)
@@ -88,9 +89,9 @@ def cumulative_sums_test(bits):
     plist = [p_forward, p_backward]
 
     if success:
-        print "PASS"
+        print("PASS")
     else:    
-        print "FAIL: Data not random"
+        print("FAIL: Data not random")
     return (success, None, plist)
 
 if __name__ == "__main__":
@@ -101,6 +102,6 @@ if __name__ == "__main__":
             0,1,1,0,0,0,1,0,1,0,0,0,1,0,1,1,1,0,0,0]
     success, _, plist = cumulative_sums_test(bits)
     
-    print "success =",success
-    print "plist = ",plist
+    print("success =",success)
+    print("plist = ",plist)
 

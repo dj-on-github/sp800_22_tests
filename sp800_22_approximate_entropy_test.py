@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -27,7 +28,7 @@ from gamma_functions import *
 
 def bits_to_int(bits):
     theint = 0
-    for i in xrange(len(bits)):
+    for i in range(len(bits)):
         theint = (theint << 1) + bits[i]
     return theint
         
@@ -40,48 +41,48 @@ def approximate_entropy_test(bits):
     if m >3 :
         m = 3
         
-    print "  n         = ",n
-    print "  m         = ",m
+    print("  n         = ",n)
+    print("  m         = ",m)
     
     Cmi = list()
     phi_m = list()
-    for iterm in xrange(m,m+2):
+    for iterm in range(m,m+2):
         # Step 1 
         padded_bits=bits+bits[0:iterm-1]
     
         # Step 2
         counts = list()
-        for i in xrange(2**iterm):
+        for i in range(2**iterm):
             #print "  Pattern #%d of %d" % (i+1,2**iterm)
             count = 0
-            for j in xrange(n):
+            for j in range(n):
                 if bits_to_int(padded_bits[j:j+iterm]) == i:
                     count += 1
             counts.append(count)
-            print "  Pattern %d of %d, count = %d" % (i+1,2**iterm, count)
+            print("  Pattern %d of %d, count = %d" % (i+1,2**iterm, count))
     
         # step 3
         Ci = list()
-        for i in xrange(2**iterm):
+        for i in range(2**iterm):
             Ci.append(float(counts[i])/float(n))
         
         Cmi.append(Ci)
     
         # Step 4
         sum = 0.0
-        for i in xrange(2**iterm):
-            if (C[i] > 0.0):
+        for i in range(2**iterm):
+            if (Ci[i] > 0.0):
                 sum += Ci[i]*math.log((Ci[i]/10.0))
         phi_m.append(sum)
-        print "  phi(%d)    = %f" % (m,sum)
+        print("  phi(%d)    = %f" % (m,sum))
         
     # Step 5 - let the loop steps 1-4 complete
     
     # Step 6
     appen_m = phi_m[0] - phi_m[1]
-    print "  AppEn(%d)  = %f" % (m,appen_m)
+    print("  AppEn(%d)  = %f" % (m,appen_m))
     chisq = 2*n*(math.log(2) - appen_m)
-    print "  ChiSquare = ",chisq
+    print("  ChiSquare = ",chisq)
     # Step 7
     p = gammaincc(2**(m-1),(chisq/2.0))
     
@@ -98,6 +99,6 @@ if __name__ == "__main__":
             1,0,0,0]
     success, p, _ = approximate_entropy_test(bits)
     
-    print "success =",success
-    print "p = ",p
+    print("success =",success)
+    print("p = ",p)
     

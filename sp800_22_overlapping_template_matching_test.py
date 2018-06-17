@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -33,7 +34,7 @@ def Pr(u, eta):
         p = math.exp(-eta)
     else:
         sum = 0.0
-        for l in xrange(1,u+1):
+        for l in range(1,u+1):
             sum += math.exp(-eta-u*math.log(2)+l*math.log(eta)-lgamma(l+1)+lgamma(u)-lgamma(l)-lgamma(u-l+1))
         p = sum
     return p
@@ -43,24 +44,24 @@ def overlapping_template_matching_test(bits,blen=6):
     
     m = 10
     # Build the template B as a random list of bits
-    B = [1 for x in xrange(m)]
+    B = [1 for x in range(m)]
     
     N = 968
     K = 5
     M = 1062
     if len(bits) < (M*N):
-        print "Insufficient data. %d bit provided. 1,028,016 bits required" % len(bits)
+        print("Insufficient data. %d bit provided. 1,028,016 bits required" % len(bits))
         return False, 0.0, None
     
     blocks = list() # Split into N blocks of M bits
-    for i in xrange(N):
+    for i in range(N):
         blocks.append(bits[i*M:(i+1)*M])
 
     # Count the distribution of matches of the template across blocks: Vj
-    v=[0 for x in xrange(K+1)] 
+    v=[0 for x in range(K+1)] 
     for block in blocks:
         count = 0
-        for position in xrange(M-m):
+        for position in range(M-m):
             if block[position:position+m] == B:
                 count += 1
             
@@ -80,7 +81,7 @@ def overlapping_template_matching_test(bits,blen=6):
     lambd = (M-m+1.0)/(2.0**m)
     eta = lambd/2.0
     sum = 0.0
-    for i in xrange(K): #  Compute Probabilities
+    for i in range(K): #  Compute Probabilities
         pi[i] = Pr(i, eta)
         sum += pi[i]
 
@@ -98,20 +99,20 @@ def overlapping_template_matching_test(bits,blen=6):
 
     sum = 0    
     chisq = 0.0
-    for i in xrange(K+1):
+    for i in range(K+1):
         chisq += ((v[i] - (N*pi[i]))**2)/(N*pi[i])
         sum += v[i]
         
     p = gammaincc(5.0/2.0, chisq/2.0) # Compute P value
 
-    print "  B = ",B
-    print "  m = ",m
-    print "  M = ",M
-    print "  N = ",N
-    print "  K = ",K
-    print "  model = ",piqty
-    print "  v[j] =  ",v 
-    print "  chisq = ",chisq
+    print("  B = ",B)
+    print("  m = ",m)
+    print("  M = ",M)
+    print("  N = ",N)
+    print("  K = ",K)
+    print("  model = ",piqty)
+    print("  v[j] =  ",v) 
+    print("  chisq = ",chisq)
     
     success = ( p >= 0.01)
     return (success,p,None)

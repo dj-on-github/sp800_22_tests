@@ -20,6 +20,7 @@
 # You should have received a copy of the GNU General Public License
 # along with sp800_22_tests.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
 
 import math
 #from scipy.special import gamma, gammainc, gammaincc
@@ -58,13 +59,13 @@ def random_excursion_test(bits):
         pos = pos + 1
     
     J = len(cycles)
-    print "J="+str(J)    
+    print("J="+str(J))    
     
     vxk = [['a','b','c','d','e','f'] for y in [-4,-3,-2,-1,1,2,3,4] ]
 
     # Count Occurances  
-    for k in xrange(6):
-        for index in xrange(8):
+    for k in range(6):
+        for index in range(8):
             mapping = [-4,-3,-2,-1,1,2,3,4]
             x = mapping[index]
             cyclecount = 0
@@ -96,11 +97,11 @@ def random_excursion_test(bits):
     
     success = True
     plist = list()
-    for index in xrange(8):
+    for index in range(8):
         mapping = [-4,-3,-2,-1,1,2,3,4]
         x = mapping[index]
         chisq = 0.0
-        for k in xrange(6):
+        for k in range(6):
             top = float(vxk[index][k]) - (float(J) * (pixk[abs(x)-1][k]))
             top = top*top
             bottom = J * pixk[abs(x)-1][k]
@@ -112,19 +113,19 @@ def random_excursion_test(bits):
             success = False
         else:
             err = ""
-        print "x = %1.0f\tchisq = %f\tp = %f %s"  % (x,chisq,p,err)
+        print("x = %1.0f\tchisq = %f\tp = %f %s"  % (x,chisq,p,err))
     if (J < 500):
-        print "J too small (J < 500) for result to be reliable"
+        print("J too small (J < 500) for result to be reliable")
     elif success:
-        print "PASS"
+        print("PASS")
     else:    
-        print "FAIL: Data not random"
+        print("FAIL: Data not random")
     return (success, None, plist)
 
 if __name__ == "__main__":
     bits = [0,1,1,0,1,1,0,1,0,1]
     success, _, plist = random_excursion_test(bits)
     
-    print "success =",success
-    print "plist = ",plist
+    print("success =",success)
+    print("plist = ",plist)
 
