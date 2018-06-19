@@ -44,7 +44,7 @@ def longest_run_ones_in_a_block_test(bits):
     n = len(bits)
 
     if n < 128:
-        return 0
+        return (False,1.0,None)
     elif n<6272:
         M = 8
     elif n<750000:
