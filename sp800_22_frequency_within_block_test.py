@@ -51,7 +51,7 @@ def frequency_within_block_test(bits):
     
     if len(bits) < 100:
         print("Too little data for test. Supply at least 100 bits")
-        return FAIL,1.0,None
+        return False,1.0,None
     
     print("  n = %d" % len(bits))
     print("  N = %d" % N)
