@@ -91,7 +91,7 @@ def maurers_universal_test(bits,patternlen=None, initblocks=None):
                  3.419,3.421]
                  
     # sigma = math.sqrt(var_table[L])
-    mag = abs((fn - ev_table[L])/((math.sqrt(var_table[L]))*math.sqrt(2)))
+    mag = abs((fn - ev_table[L]) / ((0.7 - 0.8 / L + (4 + 32 / L) * (pow(K, -3 / L)) / 15) * (math.sqrt(var_table[L] / K)) * math.sqrt(2)))
     P = math.erfc(mag)
 
     success = (P >= 0.01)
