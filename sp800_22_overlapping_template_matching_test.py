@@ -48,9 +48,9 @@ def overlapping_template_matching_test(bits,blen=6):
     
     N = 968
     K = 5
-    M = 1062
+    M = 1032
     if len(bits) < (M*N):
-        print("Insufficient data. %d bit provided. 1,028,016 bits required" % len(bits))
+        print("Insufficient data. %d bit provided. 998,976 bits required" % len(bits))
         return False, 0.0, None
     
     blocks = list() # Split into N blocks of M bits
