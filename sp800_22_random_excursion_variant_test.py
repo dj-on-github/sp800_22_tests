@@ -59,7 +59,7 @@ def random_excursion_variant_test(bits):
         if x != 0:
             top = abs(count[x]-J)
             bottom = math.sqrt(2.0 * J *((4.0*abs(x))-2.0))
-            p = top/bottom
+            p = math.erfc(top/bottom)
             plist.append(p)
             if p < 0.01:
                 err = " Not Random"
