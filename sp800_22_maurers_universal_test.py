@@ -44,7 +44,8 @@ def maurers_universal_test(bits,patternlen=None, initblocks=None):
         L = 6
         if n < 387840:
             print("Error. Need at least 387840 bits. Got %d." % n)
-            exit()
+            #exit()
+            return False,0.0,None
         for threshold in ns:
             if n >= threshold:
                 L += 1 

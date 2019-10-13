@@ -61,7 +61,8 @@ def linear_complexity_test(bits,patternlen=None):
     else: 
         if n < 1000000:
             print("Error. Need at least 10^6 bits")
-            exit()
+            #exit()
+            return False,0.0,None
         M = 512
     K = 6 
     N = int(math.floor(n/M))
