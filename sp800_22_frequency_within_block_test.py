@@ -65,10 +65,7 @@ def frequency_within_block_test(arr, sigma):
         blockVars = countBlockVars(block, sigma)
         randomVariables.extend(blockVars)
 
-    chisq, p = chisquare(randomVariables, [expectedValue] * N * sigma, sigma + N - 2, None)
-    print(expectedValue)
-    print(chisq)
-    print(p)
+    chisq, p = chisquare(randomVariables, [expectedValue] * (N * sigma), sigma + N - 2, None)
 
     success = (p >= 0.01)
     return (success,p,None)

@@ -55,12 +55,14 @@ def read_bits_from_file(filename,bigendian):
 
 import argparse
 import sys
+import matplotlib.pyplot
 parser = argparse.ArgumentParser(description='Test data for distinguishability form random, using NIST SP800-22Rev1a algorithms.')
 parser.add_argument('alphabet_size', type=int, help='Size of alphabet to consider')
 parser.add_argument('filename', type=str, nargs='?', help='Filename of binary file to test')
 parser.add_argument('--be', action='store_false',help='Treat data as big endian bits within bytes. Defaults to little endian')
 parser.add_argument('-t', '--testname', default=None,help='Select the test to run. Defaults to running all tests. Use --list_tests to see the list')
 parser.add_argument('--list_tests', action='store_true',help='Display the list of tests')
+parser.add_argument('--mode', default="default", type=str)
 
 args = parser.parse_args()
 
@@ -87,32 +89,20 @@ sigma = args.alphabet_size
 
 testlist = ['frequency_within_block_test']
 
-arr = numpy.random.randint(0, sigma, 100000)
+if args.mode == "histogram":
+    p_values = []
+    for i in range(0, 100):
+        arr = numpy.random.randint(0, sigma, 100000)
+        m = __import__("sp800_22_frequency_within_block_test")
+        func = getattr(m, "frequency_within_block_test")
+        (success,p,plist) = func(arr, sigma)
+        p_values.append(p)
 
-#bits = read_bits_from_file(filename,bigendian) -> Escribir un metodo que lea algo de alguna manera
-gotresult=False
-if args.testname:
-    if args.testname in testlist:    
-        m = __import__ ("sp800_22_"+args.testname)
-        func = getattr(m,args.testname)
-        print("TEST: %s" % args.testname)
-        success,p,plist = func(bits)
-        gotresult = True
-        if success:
-            print("PASS")
-        else:
-            print("FAIL")
- 
-        if p:
-            print("P="+str(p))
+    matplotlib.pyplot.hist(p_values, 10)
+    matplotlib.pyplot.show()
 
-        if plist:
-            for pval in plist:
-                print("P="+str(pval))
-    else:
-        print("Test name (%s) not known" % args.ttestname)
-        exit()
 else:
+    arr = numpy.random.randint(0, sigma, 100000)
     results = list()
     
     for testname in testlist:
