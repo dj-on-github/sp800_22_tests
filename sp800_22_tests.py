@@ -92,7 +92,7 @@ testlist = ['frequency_within_block_test']
 
 if args.mode == "histogram":
     p_values = []
-    for i in range(0, 10000):
+    for i in range(0, 500):
         arr = numpy.random.randint(0, sigma, 100000)
         m = __import__("sp800_22_frequency_within_block_test")
         func = getattr(m, "frequency_within_block_test")
@@ -105,7 +105,7 @@ if args.mode == "histogram":
     print(kspvalue)
 
 else:
-    arr = numpy.random.randint(0, sigma, 100000)
+    arr = numpy.random.randint(0, sigma, 10000)
     results = list()
     
     for testname in testlist:

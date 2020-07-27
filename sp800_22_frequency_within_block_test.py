@@ -23,9 +23,10 @@
 from __future__ import print_function
 
 import math
+import matplotlib.pyplot
 from fractions import Fraction
 
-from scipy.stats import chisquare
+from scipy.stats import chisquare, kstest
 from gamma_functions import *
 
 
@@ -33,6 +34,13 @@ def countBlockVars(block, sigma):
     count = [0] * sigma
     for i in block:
         count[i] = count[i] + 1
+    return count
+
+def countOnes(block, sigma):
+    count = 0
+    for i in block:
+        if i == 1:
+            count = count + 1
     return count
 
 def frequency_within_block_test(arr, sigma):
@@ -115,7 +123,7 @@ def frequency_within_block_test(arr, sigma):
 #         else:
 #             zeroes += 1
 #     return (zeroes,ones)
-
+#
 # def frequency_within_block_test_nist(bits):
 #     # Compute number of blocks M = block size. N=num of blocks
 #     # N = floor(n/M)
