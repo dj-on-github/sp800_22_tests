@@ -56,6 +56,7 @@ def read_bits_from_file(filename,bigendian):
 import argparse
 import sys
 import matplotlib.pyplot
+import scipy.stats
 parser = argparse.ArgumentParser(description='Test data for distinguishability form random, using NIST SP800-22Rev1a algorithms.')
 parser.add_argument('alphabet_size', type=int, help='Size of alphabet to consider')
 parser.add_argument('filename', type=str, nargs='?', help='Filename of binary file to test')
@@ -91,7 +92,7 @@ testlist = ['frequency_within_block_test']
 
 if args.mode == "histogram":
     p_values = []
-    for i in range(0, 100):
+    for i in range(0, 10000):
         arr = numpy.random.randint(0, sigma, 100000)
         m = __import__("sp800_22_frequency_within_block_test")
         func = getattr(m, "frequency_within_block_test")
@@ -100,6 +101,8 @@ if args.mode == "histogram":
 
     matplotlib.pyplot.hist(p_values, 10)
     matplotlib.pyplot.show()
+    statistic, kspvalue = scipy.stats.kstest(p_values, 'uniform')
+    print(kspvalue)
 
 else:
     arr = numpy.random.randint(0, sigma, 100000)
