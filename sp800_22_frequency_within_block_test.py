@@ -73,46 +73,10 @@ def frequency_within_block_test(arr, sigma):
         blockVars = countBlockVars(block, sigma)
         randomVariables.extend(blockVars)
 
-    chisq, p = chisquare(randomVariables, [expectedValue] * (N * sigma), sigma + N - 2, None)
+    chisq, p = chisquare(randomVariables, [expectedValue] * (N * sigma), N - 1, None)
 
     success = (p >= 0.01)
     return success, p, None
-
-# def frequency_within_block_test_new(arr, sigma):
-#     # Compute number of blocks M = block size. N=num of blocks
-#     # N = floor(n/M)
-#     # miniumum block size 20 bits, most blocks 100
-#     n = len(arr)
-#     M = 20
-#     N = int(math.floor(n/M))
-#     if N > 99:
-#         N=99
-#         M = int(math.floor(n/N))
-#
-#     if len(arr) < 100:
-#         print("Too little data for test. Supply at least 100 bits")
-#         return False,1.0,None
-#
-#     #print("  n = %d" % len(arr))
-#     #print("  N = %d" % N)
-#     #print("  M = %d" % M)
-#
-#     num_of_blocks = N
-#     block_size = M #int(math.floor(len(bits)/num_of_blocks))
-#     #n = int(block_size * num_of_blocks)
-#
-#     #expectedValue = M * 1.0/sigma
-#     expectedValue = Fraction(M, sigma)
-#     p_values = list()
-#     for i in range(num_of_blocks):
-#         block = arr[i*(block_size):((i+1)*(block_size))]
-#         blockVars = countBlockVars(block, sigma)
-#         randomVariables.extend(blockVars)
-#
-#     chisq, p = chisquare(randomVariables, [expectedValue] * (N * sigma), sigma + N - 2, None)
-#
-#     success = (p >= 0.01)
-#     return (success,p,None)
 
 # def count_ones_zeroes(bits):
 #     ones = 0
