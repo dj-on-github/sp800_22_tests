@@ -15,8 +15,8 @@ def upper_incomplete_gamma(a,x,d=0,iterations=100):
     if d == 0:
         try:
             result = ((x**a) * (e**(-x)))/upper_incomplete_gamma(a,x,d=d+1)
-        except:
-            result = 1.0
+        except OverflowError:
+            result = 0.0
         return result
     elif ((d % 2) == 1):
         m = 1.0+((d-1.0)/2.0)
