@@ -13,7 +13,10 @@ def upper_incomplete_gamma(a,x,d=0,iterations=100):
             m = d/2
             return x + (m-a)
     if d == 0:
-        result = ((x**a) * (e**(-x)))/upper_incomplete_gamma(a,x,d=d+1)
+        try:
+            result = ((x**a) * (e**(-x)))/upper_incomplete_gamma(a,x,d=d+1)
+        except:
+            result = 1.0
         return result
     elif ((d % 2) == 1):
         m = 1.0+((d-1.0)/2.0)
