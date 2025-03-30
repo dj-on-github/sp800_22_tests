@@ -101,13 +101,13 @@ def non_overlapping_template_matching_test(bits):
         W.append(count)
 
     mu = float(M-m+1)/float(2**m) # Compute mu and sigma
-    sigma = M * ((1.0/float(2**m))-(float((2*m)-1)/float(2**(2*m))))
+    variance = M * ((1.0/float(2**m))-(float((2*m)-1)/float(2**(2*m))))
 
     chisq = 0.0  # Compute Chi-Square
     for j in range(N):
-        chisq += ((W[j] - mu)**2)/(sigma)
+        chisq += ((W[j] - mu)**2)/(variance)
 
-    p = gammaincc((N-1)/2.0, chisq/2.0) # Compute P value
+    p = gammaincc(N/2.0, chisq/2.0) # Compute P value
 
     success = ( p >= 0.01)
     return (success,p,None)
